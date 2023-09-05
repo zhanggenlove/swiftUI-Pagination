@@ -62,7 +62,7 @@ struct Pagination: View {
             let offset = Int(floor(Double(pagerCount) / 2) - 1)
             let arr = Array(currentPage - offset ... currentPage + offset)
             array.append(contentsOf: arr)
-        } else if (pageCount != 1 && pageCount != 2) {
+        } else if (![0, 1, 2].contains(pageCount)) {
             let arr = Array(2 ..< pageCount)
             array.append(contentsOf: arr)
         }
