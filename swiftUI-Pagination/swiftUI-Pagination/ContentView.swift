@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State var pageCount: Int = 100 // 总的页数
-    @State var currentPage: Int = 12  // 当前页
+    @State var currentPage: Int = 1  // 当前页
     var body: some View {
         VStack {
             Pagination(pageCount: $pageCount, currentPage: $currentPage)

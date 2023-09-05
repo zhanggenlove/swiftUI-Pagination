@@ -62,7 +62,7 @@ struct Pagination: View {
             let offset = Int(floor(Double(pagerCount) / 2) - 1)
             let arr = Array(currentPage - offset ... currentPage + offset)
             array.append(contentsOf: arr)
-        } else {
+        } else if (pageCount != 1 && pageCount != 2) {
             let arr = Array(2 ..< pageCount)
             array.append(contentsOf: arr)
         }
@@ -214,27 +214,29 @@ struct Pagination: View {
                 }
             }
             // 最后一页
-            Button {
-                guard currentPage != pageCount else { return }
-                currentPage = pageCount
-            } label: {
-                Text("\(pageCount)")
-                    .frame(minWidth: 30, maxHeight: 28)
-                    .contentShape(Rectangle())
-                    .foregroundColor(currentPage == pageCount ? activeTextColor : lastBtnHover ? activeColor : defaultColor)
-            }
-            .buttonStyle(.plain)
-            .frame(minWidth: 30, maxHeight: 28)
-            .background(RoundedRectangle(cornerRadius: 4)
-                .fill(currentPage == pageCount ? activeBgColor : defaultBgColor)
-            )
-            .onHover { status in
-                lastBtnHover = status
-                if currentPage != pageCount {
-                    if status {
-                        NSCursor.pointingHand.push()
-                    } else {
-                        NSCursor.pointingHand.pop()
+            if (pageCount > 1) {
+                Button {
+                    guard currentPage != pageCount else { return }
+                    currentPage = pageCount
+                } label: {
+                    Text("\(pageCount)")
+                        .frame(minWidth: 30, maxHeight: 28)
+                        .contentShape(Rectangle())
+                        .foregroundColor(currentPage == pageCount ? activeTextColor : lastBtnHover ? activeColor : defaultColor)
+                }
+                .buttonStyle(.plain)
+                .frame(minWidth: 30, maxHeight: 28)
+                .background(RoundedRectangle(cornerRadius: 4)
+                    .fill(currentPage == pageCount ? activeBgColor : defaultBgColor)
+                )
+                .onHover { status in
+                    lastBtnHover = status
+                    if currentPage != pageCount {
+                        if status {
+                            NSCursor.pointingHand.push()
+                        } else {
+                            NSCursor.pointingHand.pop()
+                        }
                     }
                 }
             }
@@ -293,7 +295,7 @@ struct Pagination: View {
 
 struct Pagination_Previews: PreviewProvider {
     static var previews: some View {
-        @State var pageCount = 100
+        @State var pageCount = 1
         @State var currentPage = 1
         Pagination(pageCount: $pageCount, currentPage: $currentPage)
     }
